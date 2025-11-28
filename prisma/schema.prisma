@@ -45,13 +45,14 @@ model User{
     deposit Deposit[]
     withdrawal Withdrawal[]
     emailVerified Boolean @default(false)
+    adminVerified Boolean @default(false)
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
 
 model Wallet {
     id String @id @default(auto()) @map("_id") @db.ObjectId
-    userId String
+    userId String @db.ObjectId
     user User @relation(fields: [userId], references: [id])
     balance Float @default(0)
     createdAt DateTime @default(now())
@@ -60,7 +61,7 @@ model Wallet {
 
 model Deposit {
     id String @id @default(auto()) @map("_id") @db.ObjectId
-    userId String
+    userId String @db.ObjectId
     paymentMethod String
     user User @relation(fields: [userId], references: [id])
     amount Float
@@ -71,7 +72,7 @@ model Deposit {
 
 model Withdrawal {
     id String @id @default(auto()) @map("_id") @db.ObjectId
-    userId String
+    userId String @db.ObjectId
     paymentMethod String
     user User @relation(fields: [userId], references: [id])
     amount Float

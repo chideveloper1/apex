@@ -17,27 +17,28 @@ export default function DepositModal({
   const [amount, setAmount] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("btc");
   const [isProcessing, setIsProcessing] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const paymentMethods = [
     {
       id: "btc",
       name: "Bitcoin - BTC",
       icon: "₿",
-      address: "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh",
+      address: "bc1qxehnx7x6wc702pefyym5j55xj6a9sc6uzuc5fk",
       minimum: "0.001 BTC",
     },
     {
       id: "eth",
       name: "Ethereum - ETH",
       icon: "Ξ",
-      address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
+      address: "0x4230fa84C019fc2748A88916614F314BE333793d",
       minimum: "0.01 ETH",
     },
     {
       id: "usdt",
       name: "Tether - USDT",
       icon: "USDT",
-      address: "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM",
+      address: "0x4230fa84C019fc2748A88916614F314BE333793d",
       minimum: "0.1 USDT",
     },
   ];
@@ -48,6 +49,8 @@ export default function DepositModal({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!amount) return;
+
     setIsProcessing(true);
     try {
       await axios.post("/api/deposit", {
@@ -56,21 +59,31 @@ export default function DepositModal({
         userId: wallet.userId,
       });
       setIsProcessing(false);
-      onClose();
       setAmount("");
+      onClose();
     } catch (error) {
       console.error("Deposit failed:", error);
+      alert("Deposit failed. Please try again.");
       setIsProcessing(false);
     }
   };
 
-  const copyToClipboard = () =>
-    navigator.clipboard.writeText(selectedMethod?.address || "");
+  const copyToClipboard = async () => {
+    if (!selectedMethod?.address) return;
+    try {
+      await navigator.clipboard.writeText(selectedMethod.address);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error("Copy failed:", err);
+      alert("Failed to copy address.");
+    }
+  };
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 z-50 flex items-start sm:items-center justify-center p-4 overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center bg-black/50 p-4 overflow-y-auto">
       <div className="bg-slate-900 rounded-2xl w-full max-w-md sm:max-w-lg max-h-[95vh] overflow-y-auto border border-slate-700 shadow-xl flex flex-col">
         {/* Header */}
         <div className="flex justify-between items-center p-4 border-b border-slate-700">
@@ -140,21 +153,13 @@ export default function DepositModal({
             <p className="text-white font-mono text-sm break-all">
               {selectedMethod?.address}
             </p>
-            <div className="flex gap-2">
-              <button
-                type="button"
-                onClick={copyToClipboard}
-                className="flex-1 bg-slate-700 hover:bg-slate-600 py-2 rounded-lg text-white text-sm"
-              >
-                Copy
-              </button>
-              <button
-                type="button"
-                className="flex-1 bg-slate-700 hover:bg-slate-600 py-2 rounded-lg text-white text-sm"
-              >
-                Share
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={copyToClipboard}
+              className="flex-1 bg-slate-700 hover:bg-slate-600 py-2 rounded-lg text-white text-sm"
+            >
+              {copied ? "Copied!" : "Copy Address"}
+            </button>
           </div>
 
           {/* Network Warning */}
@@ -182,9 +187,9 @@ export default function DepositModal({
             disabled={isProcessing || !amount}
             className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-slate-600 disabled:to-slate-600 disabled:cursor-not-allowed text-white py-3 rounded-xl font-bold text-sm sm:text-base flex items-center justify-center gap-2"
           >
-            {isProcessing ? (
+            {isProcessing && (
               <span className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full"></span>
-            ) : null}
+            )}
             {isProcessing ? "Processing..." : "Fund Wallet"}
           </button>
 

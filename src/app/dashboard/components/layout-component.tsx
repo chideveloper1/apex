@@ -27,11 +27,20 @@ export default async function LayoutComponent({
 
           {/* CONTENT SECTION */}
           <div className="p-4 md:p-6">
-            {user && (user.idcard !== null || user.passport !== null) ? (
-              <main className="min-h-[calc(100vh-80px)]">{children}</main>
-            ) : (
-              <KYCPage id={user?.id!} />
-            )}
+            {user ? (
+              user.idcard !== null || user.passport !== null ? (
+                user.adminVerified === false ? (
+                  <h2 className="text-center text-red-600">
+                    Please wait while your account is being verified. This may
+                    take a few minutes.
+                  </h2>
+                ) : (
+                  <main className="min-h-[calc(100vh-80px)]">{children}</main>
+                )
+              ) : (
+                <KYCPage id={user.id} />
+              )
+            ) : null}
           </div>
         </div>
       </div>
