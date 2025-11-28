@@ -370,6 +370,7 @@ export default function EvaluationPress() {
                       <Link
                         href={item.url}
                         className="text-gray-700 text-sm leading-relaxed"
+                        target="_blank"
                       >
                         {item.name}
                       </Link>

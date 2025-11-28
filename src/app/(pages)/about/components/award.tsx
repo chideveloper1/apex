@@ -165,7 +165,7 @@ export default function AwardsAbout() {
                 <div className="bg-white rounded-xl p-6">
                   <div className="aspect-video relative rounded-lg overflow-hidden bg-gray-100">
                     <Image
-                      src="/api/placeholder/600/400"
+                      src="/image/mirror.png"
                       alt="Apex Trade Fundings Global Community"
                       fill
                       className="object-cover"

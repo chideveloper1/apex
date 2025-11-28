@@ -7,6 +7,7 @@ import LanguageSwitcher from "@/components/LanguageSwitcher";
 import ToasterProvider from "@/components/toasterProvider";
 import MainLayout from "@/components/mainLayout";
 import { useEffect } from "react";
+import Tawk from "@/components/tawk";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -46,6 +47,7 @@ export default function RootLayout({
         />
       </head>
       <MainLayout>{children}</MainLayout>
+      <Tawk />
       {/* <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased h-full`}
       >
