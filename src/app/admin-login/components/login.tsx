@@ -1,6 +1,6 @@
 "use client";
 import { signIn } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 // Removed Next.js imports: next-auth/react, next/link, next/navigation
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
@@ -22,7 +22,6 @@ const FeatureIcon = ({ startColor, endColor, children }: any) => (
 
 export default function LoginPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -118,7 +117,7 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      const callbackUrl = searchParams.get("callbackUrl") || "/admin";
+      const callbackUrl = "/admin";
 
       // Mocked signIn logic
       const result = await signIn("credentials", {
