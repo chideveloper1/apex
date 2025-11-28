@@ -2,19 +2,10 @@
 
 import { useState } from "react";
 
-interface Withdrawal {
-  id: string;
-  user: { username: string };
-  amount: string;
-  paymentMethod: string;
-  status: "Pending" | "Completed" | "Failed" | "Processing";
-  date: string;
-}
-
 export default function WithdrawalSummary({
   withdrawal,
 }: {
-  withdrawal: Withdrawal[];
+  withdrawal: any[];
 }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [entriesPerPage, setEntriesPerPage] = useState(10);
