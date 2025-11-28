@@ -13,7 +13,7 @@ export default function CrispChat() {
   useEffect(() => {
     // Crisp global variables
     window.$crisp = [];
-    window.CRISP_WEBSITE_ID = "YOUR_CRISP_WEBSITE_ID";
+    window.CRISP_WEBSITE_ID = "a731839d-133d-4d2d-8d9d-1b9b1b1b1b1b";
 
     // Create script tag
     const script = document.createElement("script");

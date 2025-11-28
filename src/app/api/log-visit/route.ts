@@ -1,22 +1,35 @@
+// src/app/api/visit/route.ts
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
     const { page } = await req.json();
 
-    // Grab IP
-    const forwarded = req.headers.get("x-forwarded-for");
-    const ip = forwarded?.split(",")[0] || "Unknown";
+    // Get IP from headers
+    let ip =
+      req.headers.get("x-forwarded-for")?.split(",")[0] ||
+      req.headers.get("x-real-ip") ||
+      "Unknown";
 
-    // Get location from IP
-    const geoRes = await fetch(`https://ipapi.co/${ip}/json/`);
-    const geo = await geoRes.json();
+    // If localhost, get public IP using ipify
+    if (ip === "127.0.0.1" || ip === "::1" || ip === "Unknown") {
+      const ipRes = await fetch("https://api.ipify.org?format=json");
+      const ipData = await ipRes.json();
+      ip = ipData.ip;
+    }
+
+    // Get geolocation from ipwho.is
+    const geoRes = await fetch(`https://ipwho.is/${ip}`);
+    const geoData = await geoRes.json();
+
+    const country = geoData.country || "Unknown";
+    const city = geoData.city || "Unknown";
 
     const info = {
       page,
       ip,
-      country: geo.country_name || "Unknown",
-      city: geo.city || "Unknown",
+      country,
+      city,
       time: new Date().toLocaleString(),
     };
 
@@ -28,8 +41,7 @@ export async function POST(req: Request) {
 *Country:* ${info.country}
 *City:* ${info.city}
 *IP:* ${info.ip}
-*Time:* ${info.time}
-    `;
+*Time:* ${info.time}`;
 
     // Send to Telegram
     await fetch(url, {

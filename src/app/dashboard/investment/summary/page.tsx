@@ -1,4 +1,3 @@
-// src/components/InvestmentScreen.tsx
 "use client";
 
 import { useState } from "react";
@@ -90,255 +89,172 @@ export default function InvestmentScreen() {
   };
 
   return (
-    <div className=" bg-slate-900 p-6">
-      {/* Header */}
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-white">Add Investment</h1>
+    <div className="p-4 sm:p-6 bg-slate-900 min-h-screen">
+      {/* HEADER */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+        <h1 className="text-xl sm:text-2xl font-bold text-white">
+          Add Investment
+        </h1>
         <button
           onClick={() => setShowAddModal(true)}
-          className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200"
+          className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-3 rounded-lg font-semibold transition-all"
         >
           Add New Investment
         </button>
       </div>
 
-      {/* Investment Table */}
+      {/* RESPONSIVE TABLE WRAPPER */}
       <div className="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden">
-        {/* Table Header */}
-        <div className="bg-slate-700 px-6 py-4 border-b border-slate-600">
-          <div className="flex justify-between items-center">
-            <div className="text-slate-300">
-              Showing {investments.length} of {investments.length} entries
-            </div>
-            <div className="flex items-center space-x-4">
-              <span className="text-slate-300 text-sm">Show</span>
-              <select className="bg-slate-600 border border-slate-500 rounded px-3 py-1 text-white text-sm">
-                <option>10</option>
-                <option>25</option>
-                <option>50</option>
-                <option>100</option>
-              </select>
-              <span className="text-slate-300 text-sm">entries</span>
-            </div>
-          </div>
+        <div className="bg-slate-700 px-4 sm:px-6 py-4 border-b border-slate-600 text-sm sm:text-base">
+          Showing {investments.length} entries
         </div>
 
-        {/* Table Content */}
-        <div className="overflow-x-auto">
+        {/* CARD VIEW ON MOBILE, TABLE ON DESKTOP */}
+        <div className="block sm:hidden">
+          {investments.map((investment) => (
+            <div
+              key={investment.id}
+              className="border-b border-slate-700 p-4 space-y-2"
+            >
+              <div className="text-white font-semibold">
+                {investment.packageName}
+              </div>
+              <div className="text-slate-300 text-sm">
+                Amount: {investment.amount}
+              </div>
+              <div className="text-slate-300 text-sm">
+                Duration: {investment.duration}
+              </div>
+              <div className="text-slate-300 text-sm">
+                DOE Safe: {investment.doeSafe}
+              </div>
+
+              <span
+                className={`inline-block px-3 py-1 rounded-full text-xs text-white ${getStatusColor(
+                  investment.status
+                )}`}
+              >
+                {investment.status}
+              </span>
+
+              <div className="text-slate-400 text-xs">{investment.date}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* DESKTOP TABLE */}
+        <div className="hidden sm:block overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr className="border-b border-slate-700">
-                <th className="text-left py-4 px-6 text-slate-400 font-semibold text-sm uppercase">
-                  PACKAGE SELECTED
-                </th>
-                <th className="text-left py-4 px-6 text-slate-400 font-semibold text-sm uppercase">
-                  AMOUNT
-                </th>
-                <th className="text-left py-4 px-6 text-slate-400 font-semibold text-sm uppercase">
-                  DURATION
-                </th>
-                <th className="text-left py-4 px-6 text-slate-400 font-semibold text-sm uppercase">
-                  DOE SAFE
-                </th>
-                <th className="text-left py-4 px-6 text-slate-400 font-semibold text-sm uppercase">
-                  STATUS
-                </th>
-                <th className="text-left py-4 px-6 text-slate-400 font-semibold text-sm uppercase">
-                  DATE
-                </th>
+                {[
+                  "Package",
+                  "Amount",
+                  "Duration",
+                  "DOE Safe",
+                  "Status",
+                  "Date",
+                ].map((t) => (
+                  <th
+                    key={t}
+                    className="text-left py-4 px-6 text-slate-400 text-sm uppercase font-semibold"
+                  >
+                    {t}
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
-              {investments.length > 0 ? (
-                investments.map((investment) => (
-                  <tr
-                    key={investment.id}
-                    className="border-b border-slate-700 hover:bg-slate-750 transition-colors"
-                  >
-                    <td className="py-4 px-6 text-white font-medium">
-                      {investment.packageName}
-                    </td>
-                    <td className="py-4 px-6 text-white">
-                      {investment.amount}
-                    </td>
-                    <td className="py-4 px-6 text-white">
-                      {investment.duration}
-                    </td>
-                    <td className="py-4 px-6 text-white">
-                      {investment.doeSafe}
-                    </td>
-                    <td className="py-4 px-6">
-                      <span
-                        className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium text-white ${getStatusColor(
-                          investment.status
-                        )}`}
-                      >
-                        {investment.status}
-                      </span>
-                    </td>
-                    <td className="py-4 px-6 text-slate-300">
-                      {investment.date}
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td
-                    colSpan={6}
-                    className="py-8 px-6 text-center text-slate-400"
-                  >
-                    No data to show
+              {investments.map((investment) => (
+                <tr
+                  key={investment.id}
+                  className="border-b border-slate-700 hover:bg-slate-750"
+                >
+                  <td className="py-4 px-6 text-white">
+                    {investment.packageName}
+                  </td>
+                  <td className="py-4 px-6 text-white">{investment.amount}</td>
+                  <td className="py-4 px-6 text-white">
+                    {investment.duration}
+                  </td>
+                  <td className="py-4 px-6 text-white">{investment.doeSafe}</td>
+                  <td className="py-4 px-6">
+                    <span
+                      className={`px-3 py-1 rounded-full text-xs text-white ${getStatusColor(
+                        investment.status
+                      )}`}
+                    >
+                      {investment.status}
+                    </span>
+                  </td>
+                  <td className="py-4 px-6 text-slate-300">
+                    {investment.date}
                   </td>
                 </tr>
-              )}
+              ))}
             </tbody>
           </table>
         </div>
 
-        {/* Table Footer */}
-        <div className="bg-slate-700 px-6 py-4 border-t border-slate-600">
-          <div className="flex justify-between items-center">
-            <div className="text-slate-300 text-sm">
-              Showing {investments.length} to {investments.length} of{" "}
-              {investments.length} entries
-            </div>
-            <div className="flex space-x-2">
-              <button className="bg-slate-600 hover:bg-slate-500 text-slate-300 px-4 py-2 rounded text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-                Previous
-              </button>
-              <button className="bg-slate-600 hover:bg-slate-500 text-slate-300 px-4 py-2 rounded text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-                Next
-              </button>
-            </div>
-          </div>
+        {/* FOOTER */}
+        <div className="bg-slate-700 px-4 sm:px-6 py-4 text-slate-300 text-sm flex justify-between">
+          <span>Showing {investments.length} entries</span>
         </div>
       </div>
 
-      {/* Add Investment Modal */}
+      {/* MODAL */}
       {showAddModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-slate-800 rounded-xl w-full max-w-md border border-slate-700 shadow-2xl">
-            {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-slate-700">
-              <h2 className="text-xl font-bold text-white">
+        <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50">
+          <div className="bg-slate-800 w-full max-w-md rounded-xl border border-slate-700">
+            <div className="flex justify-between items-center p-6 border-b border-slate-700">
+              <h2 className="text-lg font-bold text-white">
                 Add New Investment
               </h2>
               <button
                 onClick={() => setShowAddModal(false)}
-                className="text-slate-400 hover:text-white transition-colors"
+                className="text-slate-400 hover:text-white"
               >
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
+                ✕
               </button>
             </div>
 
-            {/* Form */}
             <form onSubmit={handleAddInvestment} className="p-6 space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-slate-400 mb-2">
-                  Package Name
-                </label>
-                <input
-                  type="text"
-                  value={newInvestment.packageName}
-                  onChange={(e) =>
-                    setNewInvestment({
-                      ...newInvestment,
-                      packageName: e.target.value,
-                    })
-                  }
-                  placeholder="Enter package name"
-                  className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#0D26FF] focus:border-transparent"
-                  required
-                />
-              </div>
+              {[
+                { label: "Package Name", key: "packageName" },
+                { label: "Amount ($)", key: "amount", type: "number" },
+                { label: "Duration (days)", key: "duration", type: "number" },
+                { label: "DOE Safe (%)", key: "doeSafe", type: "number" },
+              ].map((field) => (
+                <div key={field.key}>
+                  <label className="text-slate-400 text-sm mb-2 block">
+                    {field.label}
+                  </label>
+                  <input
+                    type={field.type || "text"}
+                    value={(newInvestment as any)[field.key]}
+                    onChange={(e) =>
+                      setNewInvestment({
+                        ...newInvestment,
+                        [field.key]: e.target.value,
+                      })
+                    }
+                    className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white"
+                    required
+                  />
+                </div>
+              ))}
 
-              <div>
-                <label className="block text-sm font-medium text-slate-400 mb-2">
-                  Amount ($)
-                </label>
-                <input
-                  type="number"
-                  value={newInvestment.amount}
-                  onChange={(e) =>
-                    setNewInvestment({
-                      ...newInvestment,
-                      amount: e.target.value,
-                    })
-                  }
-                  placeholder="0.00"
-                  className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#0D26FF] focus:border-transparent"
-                  required
-                  min="1"
-                  step="0.01"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-slate-400 mb-2">
-                  Duration (days)
-                </label>
-                <input
-                  type="number"
-                  value={newInvestment.duration}
-                  onChange={(e) =>
-                    setNewInvestment({
-                      ...newInvestment,
-                      duration: e.target.value,
-                    })
-                  }
-                  placeholder="30"
-                  className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#0D26FF] focus:border-transparent"
-                  required
-                  min="1"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-slate-400 mb-2">
-                  DOE Safe (%)
-                </label>
-                <input
-                  type="number"
-                  value={newInvestment.doeSafe}
-                  onChange={(e) =>
-                    setNewInvestment({
-                      ...newInvestment,
-                      doeSafe: e.target.value,
-                    })
-                  }
-                  placeholder="95"
-                  className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#0D26FF] focus:border-transparent"
-                  required
-                  min="0"
-                  max="100"
-                  step="0.1"
-                />
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex space-x-3 pt-4">
+              <div className="flex gap-3 pt-4">
                 <button
                   type="button"
                   onClick={() => setShowAddModal(false)}
-                  className="flex-1 bg-slate-700 hover:bg-slate-600 text-white py-3 rounded-lg font-semibold transition-colors"
+                  className="flex-1 bg-slate-700 hover:bg-slate-600 text-white py-3 rounded-lg"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 rounded-lg font-semibold transition-colors"
+                  className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 rounded-lg"
                 >
                   Add Investment
                 </button>

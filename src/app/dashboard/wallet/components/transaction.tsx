@@ -1,4 +1,3 @@
-// src/components/TransactionsTable.tsx
 "use client";
 
 import { useState } from "react";
@@ -16,17 +15,17 @@ export default function TransactionsTable({ deposit }: { deposit: any }) {
   const [entriesPerPage, setEntriesPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
-  console.log("deposit", deposit);
-
   const totalEntries = deposit.length;
   const startEntry = (currentPage - 1) * entriesPerPage + 1;
   const endEntry = Math.min(currentPage * entriesPerPage, totalEntries);
 
   return (
-    <div className="bg-slate-800 rounded-xl border border-slate-700 p-6">
-      {/* Table Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 space-y-3 sm:space-y-0">
-        <h2 className="text-xl font-semibold text-white">Transactions</h2>
+    <div className="bg-slate-800 rounded-xl border border-slate-700 p-4 sm:p-6">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 space-y-2 sm:space-y-0">
+        <h2 className="text-lg sm:text-xl font-semibold text-white">
+          Transactions
+        </h2>
         <div className="flex items-center space-x-2">
           <span className="text-slate-400 text-sm">Show</span>
           <select
@@ -42,79 +41,9 @@ export default function TransactionsTable({ deposit }: { deposit: any }) {
         </div>
       </div>
 
-      {/* Divider */}
-      <div className="border-b border-slate-700 mb-4"></div>
-
-      {/* Table */}
-      <div className="overflow-x-auto">
-        <table className="w-full">
-          {/* Table Headers */}
-          <thead>
-            <tr className="border-b border-slate-700">
-              <th className="text-left py-3 px-4 text-slate-400 font-semibold text-sm uppercase tracking-wide">
-                NAME
-              </th>
-              <th className="text-left py-3 px-4 text-slate-400 font-semibold text-sm uppercase tracking-wide">
-                AMOUNT
-              </th>
-              <th className="text-left py-3 px-4 text-slate-400 font-semibold text-sm uppercase tracking-wide">
-                PAYMENT METHOD
-              </th>
-              <th className="text-left py-3 px-4 text-slate-400 font-semibold text-sm uppercase tracking-wide">
-                STATUS
-              </th>
-              <th className="text-left py-3 px-4 text-slate-400 font-semibold text-sm uppercase tracking-wide">
-                DATE
-              </th>
-            </tr>
-          </thead>
-
-          {/* Table Body */}
-          <tbody>
-            {deposit
-              .slice(
-                (currentPage - 1) * entriesPerPage,
-                currentPage * entriesPerPage
-              )
-              .map((transaction: any) => (
-                <tr
-                  key={transaction.id}
-                  className="border-b border-slate-700 hover:bg-slate-750 transition-colors"
-                >
-                  <td className="py-3 px-4 text-white font-medium">
-                    {transaction.user.username}
-                  </td>
-                  <td className="py-3 px-4 text-green-400 font-semibold">
-                    {transaction.amount}
-                  </td>
-                  <td className="py-3 px-4 text-slate-300">
-                    {transaction.paymentMethod}
-                  </td>
-                  <td className="py-3 px-4">
-                    <span
-                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                        transaction.status === "COMPLETE"
-                          ? "bg-green-900/50 text-green-300 border border-green-700/50"
-                          : transaction.status === "PENDING"
-                          ? "bg-yellow-900/50 text-yellow-300 border border-yellow-700/50"
-                          : transaction.status === "PROCESSING"
-                          ? "bg-blue-900/50 text-blue-300 border border-blue-700/50"
-                          : "bg-red-900/50 text-red-300 border border-red-700/50"
-                      }`}
-                    >
-                      {transaction.status}
-                    </span>
-                  </td>
-                  <td className="py-3 px-4 text-slate-400">
-                    {transaction.createdAt.toDateString()}
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
-
-        {/* No Data State */}
-        {deposit.length === 0 && (
+      {/* Table / List */}
+      <div className="space-y-3">
+        {deposit.length === 0 ? (
           <div className="text-center py-12">
             <div className="text-slate-500 mb-3">
               <svg
@@ -138,28 +67,65 @@ export default function TransactionsTable({ deposit }: { deposit: any }) {
               Your transaction history will appear here
             </p>
           </div>
+        ) : (
+          deposit
+            .slice(
+              (currentPage - 1) * entriesPerPage,
+              currentPage * entriesPerPage
+            )
+            .map((tx: any) => (
+              <div
+                key={tx.id}
+                className="bg-slate-700 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0"
+              >
+                <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
+                  <span className="text-white font-medium">
+                    {tx.user.username}
+                  </span>
+                  <span className="text-green-400 font-semibold">
+                    {tx.amount}
+                  </span>
+                  <span className="text-slate-300 text-sm">
+                    {tx.paymentMethod}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between sm:justify-end space-x-2">
+                  <span
+                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                      tx.status === "COMPLETE"
+                        ? "bg-green-900/50 text-green-300 border border-green-700/50"
+                        : tx.status === "PENDING"
+                        ? "bg-yellow-900/50 text-yellow-300 border border-yellow-700/50"
+                        : tx.status === "PROCESSING"
+                        ? "bg-blue-900/50 text-blue-300 border border-blue-700/50"
+                        : "bg-red-900/50 text-red-300 border border-red-700/50"
+                    }`}
+                  >
+                    {tx.status}
+                  </span>
+                  <span className="text-slate-400 text-xs sm:text-sm">
+                    {tx.createdAt.toDateString()}
+                  </span>
+                </div>
+              </div>
+            ))
         )}
       </div>
 
-      {/* Table Footer */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-6 pt-6 border-t border-slate-700 space-y-3 sm:space-y-0">
-        {/* Showing entries info */}
-        <div className="text-slate-400 text-sm">
-          Showing {startEntry} to {endEntry} of {totalEntries} entries
-        </div>
-
-        {/* Pagination */}
-        <div className="flex items-center space-x-2">
-          <button
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
-            className="px-3 py-1 bg-slate-700 hover:bg-slate-600 disabled:bg-slate-800 disabled:text-slate-600 disabled:cursor-not-allowed text-slate-300 rounded text-sm transition-colors"
-          >
-            Previous
-          </button>
-
-          {/* Page Numbers */}
-          <div className="flex space-x-1">
+      {/* Footer / Pagination */}
+      {deposit.length > 0 && (
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-4 sm:mt-6 space-y-2 sm:space-y-0">
+          <div className="text-slate-400 text-sm">
+            Showing {startEntry} to {endEntry} of {totalEntries} entries
+          </div>
+          <div className="flex items-center space-x-2 flex-wrap">
+            <button
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="px-3 py-1 bg-slate-700 hover:bg-slate-600 disabled:bg-slate-800 disabled:text-slate-600 disabled:cursor-not-allowed text-slate-300 rounded text-sm transition-colors"
+            >
+              Previous
+            </button>
             {Array.from(
               { length: Math.ceil(totalEntries / entriesPerPage) },
               (_, i) => i + 1
@@ -176,31 +142,32 @@ export default function TransactionsTable({ deposit }: { deposit: any }) {
                 {page}
               </button>
             ))}
+            <button
+              onClick={() =>
+                setCurrentPage((prev) =>
+                  Math.min(prev + 1, Math.ceil(totalEntries / entriesPerPage))
+                )
+              }
+              disabled={
+                currentPage === Math.ceil(totalEntries / entriesPerPage)
+              }
+              className="px-3 py-1 bg-slate-700 hover:bg-slate-600 disabled:bg-slate-800 disabled:text-slate-600 disabled:cursor-not-allowed text-slate-300 rounded text-sm transition-colors"
+            >
+              Next
+            </button>
           </div>
-
-          <button
-            onClick={() =>
-              setCurrentPage((prev) =>
-                Math.min(prev + 1, Math.ceil(totalEntries / entriesPerPage))
-              )
-            }
-            disabled={currentPage === Math.ceil(totalEntries / entriesPerPage)}
-            className="px-3 py-1 bg-slate-700 hover:bg-slate-600 disabled:bg-slate-800 disabled:text-slate-600 disabled:cursor-not-allowed text-slate-300 rounded text-sm transition-colors"
-          >
-            Next
-          </button>
         </div>
-      </div>
+      )}
 
-      {/* Additional Actions */}
-      <div className="mt-6 flex flex-wrap gap-3">
-        <button className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-300 rounded-lg text-sm transition-colors">
+      {/* Actions */}
+      <div className="mt-4 flex flex-wrap gap-2">
+        <button className="px-3 py-1 bg-slate-700 hover:bg-slate-600 text-slate-300 rounded text-sm transition-colors">
           Export CSV
         </button>
-        <button className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-300 rounded-lg text-sm transition-colors">
+        <button className="px-3 py-1 bg-slate-700 hover:bg-slate-600 text-slate-300 rounded text-sm transition-colors">
           Print
         </button>
-        <button className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-300 rounded-lg text-sm transition-colors">
+        <button className="px-3 py-1 bg-slate-700 hover:bg-slate-600 text-slate-300 rounded text-sm transition-colors">
           Filter
         </button>
       </div>

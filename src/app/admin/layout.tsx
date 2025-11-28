@@ -22,7 +22,9 @@ export default function RootLayout({
       <AdminSidebar />
       <div className="flex-1 flex flex-col overflow-hidden">
         <Nav />
-        <main className="flex-1 overflow-auto p-6">{children}</main>
+        <main className="flex-1 overflow-auto p-0 md:p-4 lg:p-6">
+          {children}
+        </main>
       </div>
     </div>
   );

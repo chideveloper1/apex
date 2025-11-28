@@ -14,6 +14,14 @@ export default function Withdraw({ wallet }: { wallet: any }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!amount || Number(amount) <= 0) {
+      toast.error("Please enter a valid amount");
+      return;
+    }
+    if (!walletAddress.trim()) {
+      toast.error("Please enter a wallet address");
+      return;
+    }
     try {
       setLoading(true);
       const response = await axios.post("/api/withdrawal", {
@@ -78,7 +86,7 @@ export default function Withdraw({ wallet }: { wallet: any }) {
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 placeholder="0.00"
-                // disabled={wallet.balance <= 10}
+                disabled={wallet.balance <= 10}
                 className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
@@ -124,8 +132,8 @@ export default function Withdraw({ wallet }: { wallet: any }) {
           {/* Submit Button */}
           <button
             type="submit"
-            // disabled={wallet.balance <= 10}
-            className="w-full py-3 px-4 bg-blue-600 text-gray-100 rounded-lg font-medium"
+            disabled={wallet.balance <= 10}
+            className="w-full py-3 px-4 bg-blue-600 text-gray-100 rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Request Withdrawal
           </button>

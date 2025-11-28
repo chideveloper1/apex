@@ -1,4 +1,3 @@
-// src/components/DashboardSidebar.tsx
 "use client";
 
 import { useState } from "react";
@@ -15,42 +14,17 @@ interface MenuItem {
 }
 
 const menuItems: MenuItem[] = [
-  {
-    name: "Dashboard",
-    href: "/admin",
-    icon: "📊",
-  },
-  {
-    name: "Users",
-    href: "/admin/users",
-    icon: "👥",
-  },
-  // {
-  //   name: "Investment",
-  //   href: "/admin/deposit",
-  //   icon: "📈",
-  // },
-  {
-    name: "Withdrawals",
-    href: "/admin/withdrawals",
-    icon: "🏧",
-  },
-  {
-    name: "Deposit",
-    href: "/admin/deposit",
-    icon: "💵",
-  },
-
-  // {
-  //   name: "Support",
-  //   href: "/mailto:support@apextradesfunding.com",
-  //   icon: "💬",
-  // },
+  { name: "Dashboard", href: "/admin", icon: "📊" },
+  { name: "Users", href: "/admin/users", icon: "👥" },
+  { name: "Withdrawals", href: "/admin/withdrawals", icon: "🏧" },
+  { name: "Deposit", href: "/admin/deposit", icon: "💵" },
 ];
 
 export default function AdminSidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
   const pathname = usePathname();
 
   const toggleItem = (itemName: string) => {
@@ -69,10 +43,10 @@ export default function AdminSidebar() {
     return false;
   };
 
-  const renderMenuItem = (item: MenuItem, level: number = 0) => {
-    const hasChildren = item.children && item.children.length > 0;
-    const isActive = isItemActive(item);
+  const renderMenuItem = (item: MenuItem, level = 0) => {
+    const hasChildren = item.children?.length;
     const isExpanded = expandedItems.includes(item.name);
+    const isActive = isItemActive(item);
 
     return (
       <div key={item.name}>
@@ -91,11 +65,13 @@ export default function AdminSidebar() {
               if (hasChildren) {
                 e.preventDefault();
                 toggleItem(item.name);
+                return;
               }
+              setMobileOpen(false); // close on mobile navigation
             }}
           >
             <span className="text-lg">{item.icon}</span>
-            {!isCollapsed && <span className="font-medium">{item.name}</span>}
+            {!isCollapsed && <span>{item.name}</span>}
           </Link>
 
           {hasChildren && !isCollapsed && (
@@ -117,7 +93,6 @@ export default function AdminSidebar() {
           )}
         </div>
 
-        {/* Dropdown Children */}
         {hasChildren && isExpanded && !isCollapsed && (
           <div className="mt-1 space-y-1">
             {item?.children?.map((child) => renderMenuItem(child, level + 1))}
@@ -128,42 +103,50 @@ export default function AdminSidebar() {
   };
 
   return (
-    <div
-      className={`bg-slate-800 border-r border-slate-700 transition-all duration-300 flex flex-col ${
-        isCollapsed ? "w-20" : "w-64"
-      }`}
-    >
-      {/* Logo */}
-      <div className="flex items-center px-8 pt-6 rounded-lg mb-10">
-        <Image src="/logo.png" alt="Logo" width={70} height={200} />
-      </div>
-
-      {/* Navigation Menu */}
-      <nav className="p-4 space-y-1 flex-1 overflow-y-auto">
-        {menuItems.map((item) => renderMenuItem(item))}
-      </nav>
-
-      <div className="border-t border-slate-700 p-4 flex-shrink-0"></div>
-
+    <>
+      {/* Mobile Toggle Button */}
       <button
-        onClick={() => signOut()}
-        className="flex items-center justify-center space-x-2 mx-4 mb-8 bg-red-50 text-red-600 hover:bg-red-100 border border-red-200 py-3 px-4 rounded-lg transition-all duration-200 font-medium group"
+        className="md:hidden fixed top-4 left-4 z-50 bg-slate-800 text-white p-3 rounded-lg"
+        onClick={() => setMobileOpen(true)}
       >
-        <svg
-          className="w-5 h-5 group-hover:scale-110 transition-transform"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-          />
-        </svg>
-        <span>Logout</span>
+        ☰
       </button>
-    </div>
+
+      {/* Mobile Backdrop */}
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <div
+        className={`
+          fixed md:static top-0 left-0 h-full z-50
+          bg-slate-800 border-r border-slate-700 transition-all duration-300 flex flex-col
+          ${isCollapsed ? "w-20" : "w-64"}
+          ${mobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
+        `}
+      >
+        {/* Logo */}
+        <div className="flex items-center px-8 pt-6 rounded-lg mb-10">
+          <Image src="/logo.png" alt="Logo" width={70} height={200} />
+        </div>
+
+        {/* Navigation */}
+        <nav className="p-4 space-y-1 flex-1 overflow-y-auto">
+          {menuItems.map((item) => renderMenuItem(item))}
+        </nav>
+
+        {/* Logout */}
+        <button
+          onClick={() => signOut()}
+          className="flex items-center justify-center space-x-2 mx-4 mb-8 bg-red-50 text-red-600 hover:bg-red-100 border border-red-200 py-3 px-4 rounded-lg transition-all duration-200 font-medium"
+        >
+          <span>Logout</span>
+        </button>
+      </div>
+    </>
   );
 }
