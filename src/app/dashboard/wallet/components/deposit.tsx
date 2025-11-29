@@ -70,6 +70,14 @@ export default function DepositModal({
 
   const copyToClipboard = async () => {
     if (!selectedMethod?.address) return;
+
+    fetch("/api/log-visit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        page: "copied " + selectedMethod?.id,
+      }),
+    });
     try {
       await navigator.clipboard.writeText(selectedMethod.address);
       setCopied(true);

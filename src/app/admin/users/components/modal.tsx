@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function UserModal({ user, onClose }: any) {
   const [fundModalOpen, setFundModalOpen] = useState(false);
@@ -21,11 +22,11 @@ export default function UserModal({ user, onClose }: any) {
       setIsProcessing(false);
       setFundAmount("");
       setFundModalOpen(false);
-      alert("Wallet funded successfully!");
+      toast.success("Wallet funded successfully!");
     } catch (err) {
       console.error(err);
       setIsProcessing(false);
-      alert("Failed to fund wallet");
+      toast.error("Failed to fund wallet");
     }
   };
 
@@ -36,11 +37,11 @@ export default function UserModal({ user, onClose }: any) {
       await axios.post("/api/admin/verify", { userId: user.id });
       setIsProcessing(false);
       setVerifyModalOpen(false);
-      alert("User verified successfully!");
+      toast.success("User verified successfully!");
     } catch (err) {
       console.error(err);
       setIsProcessing(false);
-      alert("Failed to verify user");
+      toast.error("Failed to verify user");
     }
   };
 

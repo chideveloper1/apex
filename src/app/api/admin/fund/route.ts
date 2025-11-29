@@ -6,30 +6,20 @@ const prisma = new PrismaClient();
 export async function POST(request: Request) {
   const body = await request.json();
 
-  const user = await prisma.user.findUnique({
-    where: { id: body.userId },
-    include: { wallet: true },
+  const wallet = await prisma.wallet.findFirst({
+    where: { userId: body.userId },
   });
 
-  if (!user || !user.wallet) {
+  if (!wallet) {
     return NextResponse.json(
-      { error: "User or wallet not found" },
+      { error: "User wallet not found" },
       { status: 404 }
     );
   }
-  if (!user || !user.wallet || user.wallet.length === 0) {
-    return NextResponse.json(
-      { error: "User or wallet not found" },
-      { status: 404 }
-    );
-  }
-
-  // Pick the first wallet
-  const wallet = user.wallet[0];
 
   const updated = await prisma.wallet.update({
     where: { id: wallet.id },
-    data: { balance: { increment: body.amount } },
+    data: { balance: { increment: Number(body.amount) } },
   });
 
   return NextResponse.json(updated);
