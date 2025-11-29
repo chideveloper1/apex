@@ -8,7 +8,7 @@ export default function InvestmentPlans({ wallet }: { wallet: any }) {
       amount: "$5000.00",
       maxInvest: "$24,999.00",
       reward: "+10%",
-      duration: "30 Days",
+      duration: "Daily",
       features: ["Reward: +10%", "Duration: 30 Days"],
     },
     {
@@ -16,7 +16,7 @@ export default function InvestmentPlans({ wallet }: { wallet: any }) {
       amount: "$25,000.00",
       maxInvest: "$49,999.00",
       reward: "+15%",
-      duration: "30 Days",
+      duration: "Daily",
       features: ["Reward: +15%", "Duration: 30 Days"],
     },
     {
@@ -24,7 +24,7 @@ export default function InvestmentPlans({ wallet }: { wallet: any }) {
       amount: "$50,000.00",
       maxInvest: "$99,999.00",
       reward: "+20%",
-      duration: "30 Days",
+      duration: "Daily",
       features: ["Reward: +20%", "Duration: 30 Days"],
     },
     {
@@ -32,7 +32,7 @@ export default function InvestmentPlans({ wallet }: { wallet: any }) {
       amount: "$100,000.00",
       maxInvest: "$399,999.00",
       reward: "+25%",
-      duration: "30 Days",
+      duration: "Daily",
       features: ["Reward: +25%", "Duration: 30 Days"],
     },
     {
@@ -40,7 +40,7 @@ export default function InvestmentPlans({ wallet }: { wallet: any }) {
       amount: "$400,000.00",
       maxInvest: "$99,999,999,999.00",
       reward: "+30%",
-      duration: "30 Days",
+      duration: "Daily",
       features: ["Reward: +30%", "Duration: 30 Days"],
     },
   ];

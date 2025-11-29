@@ -1,30 +1,54 @@
 // src/app/dashboard/page.tsx
 "use client";
+import { useEffect, useState } from "react";
 import RecentInvestments from "./components/recent";
 import StatCard from "./components/statcard";
 import CopyTradingStrategies from "./components/trading";
 
 export default function Dashboard() {
+  const [loading, setLoading] = useState(true);
+  const [dashboard, setDashboard] = useState<any>([]);
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const res = await fetch(`/api/dashboard`, {
+          method: "GET",
+        });
+
+        const data = await res.json();
+        setDashboard(data);
+      } catch (err) {
+        console.error("Failed to fetch dashboard", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+  console.log(dashboard);
   return (
     <div className="space-y-6">
       {/* Top Stats Grid - Exact layout from screenshot */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
         <StatCard
           title="Assets Balance"
-          value="$0.00"
+          value={"$" + (dashboard?.wallet?.balance).toFixed(2)}
           subtitle="in $0.00"
           variant="balance"
         />
         <StatCard title="Cash" value="$0.00" subtitle="" variant="cash" />
         <StatCard
           title="Profit from Investment"
-          value="$0.00"
+          value={"$" + (dashboard?.total).toFixed(2)}
           subtitle="Progressive"
           variant="investment"
         />
         <StatCard
           title="Profit from Trading"
-          value="$0.00"
+          value={
+            "$" + (dashboard?.wallet?.balance - dashboard?.total).toFixed(2)
+          }
           subtitle="Progressive"
           variant="trading"
         />
@@ -40,13 +64,13 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
           title="Total Investments"
-          value="$0.00"
+          value={"$" + (dashboard?.total).toFixed(2)}
           subtitle="Progressive"
           variant="default"
         />
         <StatCard
           title="Total Withdrawals"
-          value="$0.00"
+          value={"$" + (dashboard?.totalWithdrawal).toFixed(2)}
           subtitle="Progressive"
           variant="default"
         />
