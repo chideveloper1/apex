@@ -46,8 +46,13 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
       </head>
-      <MainLayout>{children}</MainLayout>
-      <Tawk />
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased h-full`}
+      >
+        <MainLayout>{children}</MainLayout>
+        <Tawk />
+      </body>
+
       {/* <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased h-full`}
       >

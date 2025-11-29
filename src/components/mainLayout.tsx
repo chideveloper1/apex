@@ -20,14 +20,12 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   return (
-    <body
-      className={`${geistSans.variable} ${geistMono.variable} antialiased h-full`}
-    >
+    <div>
       <div className="top left-4 z-1 p-1">
         <LanguageSwitcher />
       </div>
       {children}
       <ToasterProvider />
-    </body>
+    </div>
   );
 }
