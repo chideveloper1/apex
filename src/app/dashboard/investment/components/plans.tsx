@@ -4,36 +4,44 @@ import Link from "next/link";
 export default function InvestmentPlans({ wallet }: { wallet: any }) {
   const investmentPlans = [
     {
+      name: "Basic",
+      amount: "$5000.00",
+      maxInvest: "$24,999.00",
+      reward: "+10%",
+      duration: "30 Days",
+      features: ["Reward: +10%", "Duration: 30 Days"],
+    },
+    {
       name: "Rookie",
       amount: "$25,000.00",
       maxInvest: "$49,999.00",
       reward: "+15%",
-      duration: "5 Days",
-      features: ["Reward: +15%", "Duration: 5 Days"],
+      duration: "30 Days",
+      features: ["Reward: +15%", "Duration: 30 Days"],
     },
     {
       name: "Standard",
       amount: "$50,000.00",
       maxInvest: "$99,999.00",
       reward: "+20%",
-      duration: "5 Days",
-      features: ["Reward: +20%", "Duration: 5 Days"],
+      duration: "30 Days",
+      features: ["Reward: +20%", "Duration: 30 Days"],
     },
     {
       name: "Premium",
       amount: "$100,000.00",
       maxInvest: "$399,999.00",
       reward: "+25%",
-      duration: "5 Days",
-      features: ["Reward: +25%", "Duration: 5 Days"],
+      duration: "30 Days",
+      features: ["Reward: +25%", "Duration: 30 Days"],
     },
     {
       name: "Ultimate",
       amount: "$400,000.00",
       maxInvest: "$99,999,999,999.00",
       reward: "+30%",
-      duration: "5 Days",
-      features: ["Reward: +30%", "Duration: 5 Days"],
+      duration: "30 Days",
+      features: ["Reward: +30%", "Duration: 30 Days"],
     },
   ];
 
