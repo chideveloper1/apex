@@ -231,7 +231,7 @@ const MultiStepForm = ({ id }: { id: string }) => {
   ];
 
   return (
-    <div className="min-h-screen py-8 px-4">
+    <div className="min-h-screen py-8 px-1 md:px-6">
       <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
         {/* Header */}
         <div className="bg-blue-600 text-white p-6">

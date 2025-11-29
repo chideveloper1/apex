@@ -11,7 +11,7 @@ export default function OnboardingLayout({
       <OnboardingSidebar />
       <div className="flex-1 flex flex-col overflow-hidden">
         <Nav />
-        <main className="flex-1 overflow-auto p-6">{children}</main>
+        <main className="flex-1 overflow-auto p-1 md:p-6">{children}</main>
       </div>
     </div>
   );
