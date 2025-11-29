@@ -16,10 +16,18 @@ export async function GET() {
   }
   const total = await prisma.deposit.aggregate({
     _sum: { amount: true },
+    where: {
+      userId: session?.user?.id,
+      status: "APPROVED",
+    },
   });
 
   const totalWithdrawal = await prisma.withdrawal.aggregate({
     _sum: { amount: true },
+    where: {
+      userId: session?.user?.id,
+      status: "APPROVED",
+    },
   });
 
   const wallet = await prisma.wallet.findFirst({
