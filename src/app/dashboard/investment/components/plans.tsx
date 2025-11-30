@@ -9,7 +9,7 @@ export default function InvestmentPlans({ wallet }: { wallet: any }) {
       maxInvest: "$24,999.00",
       reward: "+10%",
       duration: "Daily",
-      features: ["Reward: +10%", "Duration: 30 Days"],
+      // features: ["Reward: +10%", "Duration: 30 Days"],
     },
     {
       name: "Rookie",
@@ -17,7 +17,7 @@ export default function InvestmentPlans({ wallet }: { wallet: any }) {
       maxInvest: "$49,999.00",
       reward: "+15%",
       duration: "Daily",
-      features: ["Reward: +15%", "Duration: 30 Days"],
+      // features: ["Reward: +15%", "Duration: 30 Days"],
     },
     {
       name: "Standard",
@@ -25,7 +25,7 @@ export default function InvestmentPlans({ wallet }: { wallet: any }) {
       maxInvest: "$99,999.00",
       reward: "+20%",
       duration: "Daily",
-      features: ["Reward: +20%", "Duration: 30 Days"],
+      // features: ["Reward: +20%", "Duration: 30 Days"],
     },
     {
       name: "Premium",
@@ -33,7 +33,7 @@ export default function InvestmentPlans({ wallet }: { wallet: any }) {
       maxInvest: "$399,999.00",
       reward: "+25%",
       duration: "Daily",
-      features: ["Reward: +25%", "Duration: 30 Days"],
+      // features: ["Reward: +25%", "Duration: 30 Days"],
     },
     {
       name: "Ultimate",
@@ -41,7 +41,7 @@ export default function InvestmentPlans({ wallet }: { wallet: any }) {
       maxInvest: "$99,999,999,999.00",
       reward: "+30%",
       duration: "Daily",
-      features: ["Reward: +30%", "Duration: 30 Days"],
+      // features: ["Reward: +30%", "Duration: 30 Days"],
     },
   ];
 
@@ -99,7 +99,7 @@ export default function InvestmentPlans({ wallet }: { wallet: any }) {
             </div>
 
             {/* Features */}
-            <div className="space-y-3 mb-6">
+            {/* <div className="space-y-3 mb-6">
               {plan.features.map((feature, featureIndex) => (
                 <div key={featureIndex} className="flex items-center space-x-2">
                   <svg
@@ -116,7 +116,7 @@ export default function InvestmentPlans({ wallet }: { wallet: any }) {
                   <span className="text-slate-300 text-sm">{feature}</span>
                 </div>
               ))}
-            </div>
+            </div> */}
 
             {/* Action Button */}
             {wallet?.balance < 25000 && (
