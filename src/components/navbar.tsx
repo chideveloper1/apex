@@ -61,6 +61,12 @@ const Navbar = ({ user }: { user: any }) => {
               >
                 Testimonials
               </Link>
+              <a
+                href="mailto:apextradingsfunds@gmail.com"
+                className="text-gray-700 hover:text-blue-900 px-3 py-2 text-sm font-medium"
+              >
+                Contact Us
+              </a>
             </div>
 
             {!user ? (
@@ -172,6 +178,13 @@ const Navbar = ({ user }: { user: any }) => {
           >
             Testimonials
           </Link>
+          <a
+            href="mailto:apextradingsfunds@gmail.com"
+            className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-900 hover:bg-gray-50"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Contact Us
+          </a>
           <div className="pt-4 pb-3 border-t border-gray-200">
             <div className="space-y-3 px-2">
               <Link
