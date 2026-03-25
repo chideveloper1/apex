@@ -28,7 +28,7 @@ export default async function LayoutComponent({
           {/* CONTENT SECTION */}
           <div className="p-4 md:p-6">
             <main className="min-h-[calc(100vh-80px)]">{children}</main>
-            /* {user ? (
+            {/* {user ? (
               user.idcard || user.passport ? (
                 !user.adminVerified ? (
                   <h2 className="text-center text-red-600">
@@ -41,7 +41,7 @@ export default async function LayoutComponent({
               ) : (
                 <KYCPage id={user.id} />
               )
-            ) : null} */
+            ) : null} */}
           </div>
         </div>
       </div>
