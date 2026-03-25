@@ -146,7 +146,7 @@ export default function AccountSettings({ user }: { user: any }) {
               </div>
               <div className="lg:col-span-2">
                 <div className="bg-gray-800/30 rounded-lg p-4 border border-gray-700">
-                  <p className="text-gray-300">{userData.phone}</p>
+                  <p className="text-gray-300">{userData?.phone}</p>
                 </div>
               </div>
             </div>
@@ -162,7 +162,7 @@ export default function AccountSettings({ user }: { user: any }) {
               </div>
               <div className="lg:col-span-2">
                 <div className="bg-gray-800/30 rounded-lg p-4 border border-gray-700">
-                  <p className="text-gray-300">{userData.email}</p>
+                  <p className="text-gray-300">{userData?.email}</p>
                 </div>
               </div>
             </div>
@@ -178,7 +178,7 @@ export default function AccountSettings({ user }: { user: any }) {
               </div>
               <div className="lg:col-span-2">
                 <div className="bg-gray-800/30 rounded-lg p-4 border border-gray-700">
-                  <p className="text-gray-300 capitalize">{userData.gender}</p>
+                  <p className="text-gray-300 capitalize">{userData?.gender}</p>
                 </div>
               </div>
             </div>
@@ -194,7 +194,7 @@ export default function AccountSettings({ user }: { user: any }) {
               </div>
               <div className="lg:col-span-2">
                 <div className="bg-gray-800/30 rounded-lg p-4 border border-gray-700">
-                  <p className="text-gray-300">{userData.address}</p>
+                  <p className="text-gray-300">{userData?.address}</p>
                 </div>
               </div>
             </div>
@@ -210,7 +210,7 @@ export default function AccountSettings({ user }: { user: any }) {
               </div>
               <div className="lg:col-span-2">
                 <div className="bg-gray-800/30 rounded-lg p-4 border border-gray-700">
-                  <p className="text-gray-300">{userData.country}</p>
+                  <p className="text-gray-300">{userData?.country}</p>
                 </div>
               </div>
             </div>
