@@ -11,7 +11,7 @@ interface Referral {
 export default function Referrals({ user }: { user: any }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [entriesPerPage, setEntriesPerPage] = useState(10);
-  const referralLink = `https://apextradesfunding.com/register?ref=${user.username}`;
+  const referralLink = `https://apextradesfunding.com/register?ref=${user?.username}`;
 
   // Mock data - replace with your actual data
   const referrals: Referral[] = [];
