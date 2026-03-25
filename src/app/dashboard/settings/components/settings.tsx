@@ -87,7 +87,7 @@ export default function AccountSettings({ user }: { user: any }) {
               <div className="lg:col-span-2">
                 <div className="bg-gray-800/30 rounded-lg p-4 border border-gray-700">
                   <p className="text-gray-300 font-medium">
-                    {userData.username}
+                    {userData?.username}
                   </p>
                 </div>
               </div>
@@ -109,7 +109,7 @@ export default function AccountSettings({ user }: { user: any }) {
                   <div className="flex-1 bg-gray-800/30 rounded-lg p-4 border border-gray-700">
                     <code className="text-blue-400 text-sm break-all">
                       https://apextradesfunding.com/register?ref=$
-                      {userData.username}
+                      {userData?.username}
                     </code>
                   </div>
                   <button
